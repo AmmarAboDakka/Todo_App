@@ -5,6 +5,7 @@ import '../modules/task_list/Setting_Tap.dart';
 class MyProvider extends ChangeNotifier{
 
   int currentindex=0;
+
   List<Widget>tab=[TaskListsTab(),SettingTab()];
 
   void ChangeTab(int indexii){

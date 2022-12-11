@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:todo_app/shared/style/My_Theme.dart';
-
 import 'layout/home_layout.dart';
 
 void main() {

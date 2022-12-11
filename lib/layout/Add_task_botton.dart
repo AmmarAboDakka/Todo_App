@@ -43,7 +43,7 @@ class _AddTaskBottonState extends State<AddTaskBotton> {
                 height: 10,
               ),
               TextFormField(
-                style: const TextStyle(color: Colors.black),
+                  style: const TextStyle(color: Colors.black),
                 autofocus:true,
                 controller: TitleControler,
                 decoration: InputDecoration(
