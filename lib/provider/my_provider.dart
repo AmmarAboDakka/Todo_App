@@ -1,15 +1,14 @@
 import 'package:flutter/material.dart';
-import '../modules/setting/TaskListsTab.dart';
-import '../modules/task_list/Setting_Tap.dart';
+import '../modules/task_list/TaskListsTab.dart';
+import '../modules/setting/Setting_Tap.dart';
 
-class MyProvider extends ChangeNotifier{
+class MyProvider extends ChangeNotifier {
+  int currentindex = 0;
 
-  int currentindex=0;
+  List<Widget> tab = [TaskListsTab(), SettingTab()];
 
-  List<Widget>tab=[TaskListsTab(),SettingTab()];
-
-  void ChangeTab(int indexii){
-    currentindex=indexii;
+  void ChangeTab(int indexii) {
+    currentindex = indexii;
     notifyListeners();
   }
   ///////////////////////////////////////
