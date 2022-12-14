@@ -1,15 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../provider/lang&theme.dart';
+
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingTab extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    var provider = Provider.of<LathProvider>(context);
     return Center(
       child: Column(
         children: [
           SizedBox(
             height: 50,
           ),
-          Text("Language",
+          Text(AppLocalizations.of(context)!.lang,
               style: Theme.of(context).textTheme.headline1,
               textAlign: TextAlign.start),
           SizedBox(
@@ -18,15 +24,21 @@ class SettingTab extends StatelessWidget {
           PopupMenuButton<int>(
             itemBuilder: (context) => [
               PopupMenuItem(
-                onTap: () {},
+                onTap: () {
+                  provider.chooselanguge('en');
+                },
                 value: 1,
-                child: const Text(
+                child: Text(
+                  textAlign: TextAlign.center,
                   "English",
                   style: TextStyle(
                       color: Colors.black, fontWeight: FontWeight.w700),
                 ),
               ),
               PopupMenuItem(
+                onTap: () {
+                  provider.chooselanguge('ar');
+                },
                 value: 2,
                 child: Text(
                   "Arabic",
@@ -41,10 +53,13 @@ class SettingTab extends StatelessWidget {
               decoration: ShapeDecoration(
                 color: Colors.orange,
                 shape: StadiumBorder(
-                  side: BorderSide(color: Colors.black, width: 2),
+                  side: BorderSide(color: Colors.white, width: 2),
                 ),
               ),
-              child: Icon(Icons.language),
+              child: Icon(
+                Icons.language,
+                color: Colors.white,
+              ),
             ),
           ),
           SizedBox(
@@ -82,54 +97,23 @@ class SettingTab extends StatelessWidget {
               decoration: ShapeDecoration(
                 color: Colors.orange,
                 shape: StadiumBorder(
-                  side: BorderSide(color: Colors.black, width: 2),
+                  side: BorderSide(color: Colors.white, width: 2),
                 ),
               ),
-              child: Icon(Icons.sunny),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Icon(Icons.sunny, color: Colors.white),
+                  Icon(
+                    Icons.dark_mode,
+                    color: Colors.white,
+                  )
+                ],
+              ),
             ),
           ),
-          SimpleDialog(
-            title: Text(
-              "Be careful!",
-              textAlign: TextAlign.center,
-            ),
-            children: <Widget>[
-              Text(
-                "If you write a message, you should care about the message.",
-                textAlign: TextAlign.center,
-              ),
-            ],
-            backgroundColor: Colors.blue,
-            elevation: 4,
-            shape: StadiumBorder(
-              side: BorderSide(
-                style: BorderStyle.none,
-              ),
-            ),
-          )
         ],
       ),
     );
-    ;
-    // return        SettingsList(
-    //   sections: [
-    //     SettingsSection(
-    //       title: Text('Common'),
-    //       tiles: <SettingsTile>[
-    //         SettingsTile.navigation(
-    //           leading: Icon(Icons.language),
-    //           title: Text('Language'),
-    //           value: Text('English'),
-    //         ),
-    //         SettingsTile.switchTile(
-    //           onToggle: (value) {},
-    //           initialValue: true,
-    //           leading: Icon(Icons.format_paint),
-    //           title: Text('Enable custom theme'),
-    //         ),
-    //       ],
-    //     ),
-    //   ],
-    // );
   }
 }

@@ -5,8 +5,9 @@ class TaskItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
+      decoration: BoxDecoration(
+          color: Colors.white, borderRadius: BorderRadius.circular(12)),
       margin: EdgeInsets.all(12),
-      color: Colors.white,
       padding: EdgeInsets.symmetric(horizontal: 12, vertical: 14),
       child: Row(
         children: [
