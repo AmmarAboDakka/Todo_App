@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:todo_app/modales/tasks.dart';
 import 'package:todo_app/provider/my_provider.dart';
 import 'package:todo_app/shared/style/colors.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
+import '../shared/components/component.dart';
+import '../shared/network/locale/Firebase_utiles.dart';
 
 class AddTaskBotton extends StatefulWidget {
   @override
@@ -10,9 +14,9 @@ class AddTaskBotton extends StatefulWidget {
 }
 
 class _AddTaskBottonState extends State<AddTaskBotton> {
-  var TitleControler = TextEditingController();
+  var titleControler = TextEditingController();
 
-  var DescriptionControler = TextEditingController();
+  var descriptionControler = TextEditingController();
 
   GlobalKey<FormState> formkey = GlobalKey<FormState>();
 
@@ -22,12 +26,11 @@ class _AddTaskBottonState extends State<AddTaskBotton> {
     return ChangeNotifierProvider(
       create: (context) => MyProvider(),
       builder: (context, child) {
-      var prvider=Provider.of<MyProvider>(context);
-      return SingleChildScrollView(
-
-        padding: EdgeInsets.only(bottom: mediaQueryData.viewInsets.bottom),
-        child: Container(
-          padding: EdgeInsets.all(12),
+        var prvider = Provider.of<MyProvider>(context);
+        return SingleChildScrollView(
+          padding: EdgeInsets.only(bottom: mediaQueryData.viewInsets.bottom),
+          child: Container(
+            padding: EdgeInsets.all(12),
             child: Form(
               key: formkey,
               child: Column(
@@ -56,7 +59,7 @@ class _AddTaskBottonState extends State<AddTaskBotton> {
                     },
                     style: const TextStyle(color: Colors.black),
                     autofocus: true,
-                    controller: TitleControler,
+                    controller: titleControler,
                     decoration: InputDecoration(
                       focusedBorder: OutlineInputBorder(
                           borderSide:
@@ -83,9 +86,9 @@ class _AddTaskBottonState extends State<AddTaskBotton> {
                       }
                       return null;
                     },
-                    style: const TextStyle(color: Colors.black),
+                    style: TextStyle(color: Colors.black),
                     maxLines: 4,
-                    controller: DescriptionControler,
+                    controller: descriptionControler,
                     decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderSide:
@@ -131,16 +134,35 @@ class _AddTaskBottonState extends State<AddTaskBotton> {
                   ),
                   ElevatedButton(
                       onPressed: () {
-                        if (formkey.currentState!.validate()) {}
+                        if (formkey.currentState!.validate()) {
+                          Task task = Task(
+                              title: titleControler.text,
+                              description: descriptionControler.text,
+                              date: DateUtils.dateOnly(prvider.selectdate)
+                                  .millisecondsSinceEpoch);
+                          showLoading(context, "Loading...", barrierDis: false);
+                          addTasktofirestore(task).then((value) {
+                            hideLoading(context);
+                            showMessage(
+                              context,
+                              "Done",
+                              "Task Added",
+                              "ok",
+                              () {
+                                Navigator.pop(context);
+                                Navigator.pop(context);
+                              },
+                            );
+                          });
+                        }
                       },
                       child: Text("Add"))
                 ],
               ),
             ),
-        ),
-      );
-    },);
+          ),
+        );
+      },
+    );
   }
-
-
 }
