@@ -11,7 +11,6 @@ class MyProvider extends ChangeNotifier {
     currentindex = indexii;
     notifyListeners();
   }
-
   DateTime selectdate=DateTime.now();
 
   void SelectDate(BuildContext context)async{
