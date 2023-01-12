@@ -26,8 +26,10 @@ class _TaskEditeState extends State<TaskEdite> {
   @override
   Widget build(BuildContext context) {
     final arg = ModalRoute.of(context)!.settings.arguments as TaskItem;
+
     titleeControler.text = arg.task.title;
     descriptioneControler.text = arg.task.description;
+
     return ChangeNotifierProvider(
         create: (context) => MyProvider(),
         builder: (context, child) {
@@ -76,6 +78,7 @@ class _TaskEditeState extends State<TaskEdite> {
                       height: 20,
                     ),
                     TextFormField(
+                      maxLines: 5,
                       controller: descriptioneControler,
                       validator: (value) {
                         if (value == "" || value!.isEmpty) {
@@ -87,7 +90,7 @@ class _TaskEditeState extends State<TaskEdite> {
                       decoration: InputDecoration(
                         focusedBorder: OutlineInputBorder(
                             borderSide:
-                                BorderSide(color: Colors.blueGrey, width: 3),
+                            BorderSide(color: Colors.blueGrey, width: 3),
                             borderRadius: BorderRadius.circular(12)),
                         enabledBorder: OutlineInputBorder(
                           borderSide: BorderSide(color: primaryorangcolor),
@@ -140,8 +143,10 @@ class _TaskEditeState extends State<TaskEdite> {
                                   descriptioneControler.text,
                                   DateUtils.dateOnly(prvider.selectdate)
                                       .millisecondsSinceEpoch);
-                              Navigator.of(context)
-                                  .pushNamed(HomeLayout.RouteName);
+                              Navigator.of(context).pushAndRemoveUntil(
+                                  MaterialPageRoute(
+                                      builder: (context) => HomeLayout()),
+                                  (Route<dynamic> route) => false);
                             }
                           },
                           child: Text("Done")),
