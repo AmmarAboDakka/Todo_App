@@ -35,3 +35,11 @@ Future<void> getUserInfor(Task task, String title, String des, int date) async {
       .doc(task.id)
       .update({"title": title, "description": des, "date": date});
 }
+
+Stream<QuerySnapshot<Task>> getdatafromIsdone(Task task) {
+  return getTaskCollection().where("IsDone").snapshots();
+}
+
+Future<void> updateBool(String taskid, bool done) async {
+  return getTaskCollection().doc(taskid).update({"isDone": done});
+}
